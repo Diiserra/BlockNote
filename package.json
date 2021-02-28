@@ -1,0 +1,11 @@
+{
+  "name": "BlockNote",
+  "version": "1",
+  "description": "Aplicação web",
+  "main": "index.js",
+  "author": "Diego Lima <diiserras@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
