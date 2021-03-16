@@ -8,5 +8,6 @@ router.get('/task/:id', task.findById)
 router.post('/task', task.create)
 router.put('/update/:id', task.uptade)
 router.delete('/delete/:id', task.delete)
+router.get('/listAll', task.listAll)
 
 module.exports = router

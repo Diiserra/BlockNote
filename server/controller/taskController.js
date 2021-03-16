@@ -4,7 +4,7 @@ const task = require('../model/taskModel')
 module.exports = {
 
     started: (req, res) =>{
-        res.render('home', { ola: 'Ola teste teste teste'})
+        res.render('home')
         task.sync()
     },
 
@@ -17,7 +17,7 @@ module.exports = {
 
     read: async (req, res) =>{
         const data = await task.findAll()
-        res.status(200).render('tasks', { data })
+        res.status(200).render('tasks')
     },
 
     findById: async (req, res) =>{
@@ -25,6 +25,12 @@ module.exports = {
         const data = await task.findByPk(id)
         res.status(200).json(data)
     },
+    
+    listAll: async (req, res) =>{
+        const data = await task.findAll()
+        res.status(200).json(data)
+    },
+
 
     uptade: async (req, res) =>{
         const title = req.body.title
