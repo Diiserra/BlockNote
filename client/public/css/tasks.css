@@ -1,0 +1,217 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+}
+
+.annotations{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1006%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(255%2c 255%2c 255%2c 1)'%3e%3c/rect%3e%3cpath d='M299.04 662.91C478.38 643.65 593.82 253.27 892.77 253.02 1191.73 252.77 1323.69 515.66 1486.51 521.82' stroke='rgba(0%2c 0%2c 0%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3cpath d='M186.71 590.9C358.33 589.18 498.46 412.44 847.91 406.2 1197.35 399.96 1330.74 142.47 1509.1 137.4' stroke='rgba(0%2c 0%2c 0%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3cpath d='M710.11 645.05C839.48 642.61 935.32 481.66 1198.69 474.3 1462.07 466.94 1553.01 255.55 1687.28 250.3' stroke='rgba(0%2c 0%2c 0%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3cpath d='M183.92 657.48C399.17 624.27 512.2 110.08 859.81 107.79 1207.42 105.5 1357.71 328.9 1535.7 331.79' stroke='rgba(0%2c 0%2c 0%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3cpath d='M576.73 568.57C729.48 553.15 827.87 226.66 1086.42 226.03 1344.97 225.4 1461.96 391.88 1596.11 394.03' stroke='rgba(0%2c 0%2c 0%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1006'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+    background-position: bottom;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hello{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 120px;
+    background-color: rgb(0, 0, 0);
+    overflow: hidden;
+    padding: 0 24px 0 24px;
+}
+
+.hello h1, p{
+    color: rgb(255, 255, 255);
+}
+
+.hello-title{
+    font-size: 28px;
+}
+
+.add-annotations{
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 70%;
+    padding: 0 24px 0 24px;
+}
+
+.add-annotations p{
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+}
+
+#bt-new-annotation{
+    width: 180px;
+    height: 35px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 12px 0 12px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.annotations-list{
+    width: 95%;
+    margin: 12px auto;
+}
+
+.annotations-list table{
+    width: 100%;
+    margin: 8px 0 0 0;
+    border-collapse: collapse;
+    border: 1px solid rgb(22, 22, 33, 0.2);
+}
+
+table tr{
+    width: 100%;
+    height: 60px;
+    background-color: #E8E8E8;
+    
+}
+
+tr:nth-child(odd){
+    background-color: #F5F5F5;
+    
+}
+
+tr td:nth-child(1){
+    width: 80%;
+    padding: 0 12px;
+}
+
+td div {
+    width: 95%;
+    height: 45px;
+    overflow: hidden;
+    padding-top: 2px;
+}
+
+td div p {
+    color: rgb(0, 0, 0);
+}
+
+table tr:last-of-type{
+    border-bottom: 5px solid #363636;
+}
+
+.update{
+    text-decoration: none;
+    background-color:  rgb(255, 255, 255);
+    color: orange;
+    padding: 4px 18px;
+    border-radius: 14px;
+    border: 1px solid orange;
+}
+
+.delete{
+    text-decoration: none;
+    background-color: rgb(255, 255, 255);
+    color: #FF4040;
+    padding: 4px 18px;
+    border-radius: 14px;
+    border: 1px solid #FF4040;
+}
+
+.form-annotation{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    visibility: hidden;
+}
+
+.form-annotation form{
+    width: 60%;
+    height: 65%;
+    background-color: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+.form-annotation #title{
+    height: 35px;
+    margin: 6px;
+    padding-left: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.form-annotation #annotation{
+    height: 200px;
+    margin: 6px;
+    padding: 5px;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    outline: none;
+}
+
+.form-annotation div{
+    min-height: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.form-annotation div button{
+    width: 200px;
+    height: 45px;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+}
+
+.form-annotation div button span{
+    margin-left: 8px;
+}
+
+.form-annotation div button:nth-child(1){
+    background-color: green;
+}
+
+.form-annotation div button:nth-child(2){
+    background-color: #FF4040;
+    margin: 6px;
+}
+
+.form-annotation div button:nth-child(1):active{
+    background-color: #006400;
+}
+
+.form-annotation div button:nth-child(2):active{
+    background-color: #CD2626;
+}
+
+#bt-update{
+    background-color: orange;
+}

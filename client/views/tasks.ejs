@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tasks.css" type="text/css">
+    <title>BlockNote - Lista de tarefas</title>
+</head>
+<body>
+    <section class="annotations">
+        <header class="hello">
+            <h1 class="hello-title">Olá, seja bem vindo.</h1>
+            <p class="hello-description">Organizamos suas anotações abaixo, espero que goste do nosso serviço ;) .</p>
+        </header>
+        <div class="add-annotations">
+            <p>Não há anotações ainda? click para adicionar novas anotações.</p>
+            <button id="bt-new-annotation" type="button">Adicionar anotações <span class="material-icons">add</span></button>
+        </div>
+        <div class="annotations-list">
+            <h1>Anotações:</h1>
+            <table id="table">
+                <% data.forEach((task) =>{ %>
+                    <tr>
+                        <td><div><h4><%= task.title %>:</h4><p><%= task.annotation %></p></div></td>
+                        <td><a class="update" href="http://localhost:3000/app/task/<%= task.id %>">Atualizar</a></td>
+                        <td><a class="delete" href="http://localhost:3000/app/delete/<%= task.id %>">Deletar</a></td>
+                    </tr>
+                <%})%>
+            </table>
+        </div>
+    </section>
+    <section class="form-annotation">
+        <form>
+            <h1>Tarefa:</h1>
+            <input type="text" name="title" id="title" placeholder="Titulo:">
+            <textarea name="annotation" id="annotation" placeholder="Descrição da tarefa:"></textarea>
+            <div class="form-buttons">
+                <button id="bt-save" type="button">Salvar<span class="material-icons">done</span></button>
+                <button id="bt-cancel" type="button">Cancelar <span class="material-icons">clear</span></button>
+                <button id="bt-update" type="button">Atualizar <span class="material-icons">autorenew</span></button>
+            </div>
+        </form>
+    </section>
+    <script>
+
+window.addEventListener('load', () =>{
+    const userName = localStorage.getItem('userName')
+    document.querySelector('.hello-title').innerHTML = `Olá ${userName}, seja bem vindo.`
+})
+
+let url
+
+document.getElementById('bt-new-annotation').addEventListener('click', openNewTaskForm)
+
+document.getElementById('bt-update').addEventListener('click', updateTask)
+
+document.getElementById('bt-save').addEventListener('click', createNewTask)
+
+document.getElementById('bt-cancel').addEventListener('click', () =>{
+    document.querySelector('.form-annotation').style.visibility = 'hidden'
+})
+
+document.querySelector('#table').addEventListener('click', event =>{
+    event.preventDefault()
+    const element = event.target
+    if (element.getAttribute('class') === 'delete'){
+        const url = element.getAttribute('href')
+        fetch(url, {
+            method: 'DELETE'
+        }).then(response => response.ok).then(() => {
+            location.reload(true)
+        }).catch(error => console.log(error))
+    }
+})
+
+
+document.querySelector('#table').addEventListener('click', (event) =>{
+    event.preventDefault()
+    const element = event.target
+    if (element.getAttribute('class') === 'update'){
+        url = element.getAttribute('href')
+        const taskBody = getTask(url)
+        taskBody.then( data =>{
+            document.getElementById('title').value = data.title
+            document.getElementById('annotation').value = data.annotation
+            document.querySelector('.form-annotation').style.visibility = 'visible'
+            document.getElementById('bt-save').style.visibility = 'hidden'
+        })
+    }
+    
+})
+
+
+async function getTask(url){
+    const task = await fetch(url)
+    const taskBody = await task.json()
+    return taskBody
+}
+
+function openNewTaskForm(){
+    document.querySelector('.form-annotation').style.visibility = 'visible'
+    document.getElementById('bt-update').style.visibility = 'hidden'
+
+}
+
+function createNewTask(){
+    const title = document.getElementById('title').value
+    const annotation = document.getElementById('annotation').value
+
+    if (title === '' || annotation === '' ){
+        alert('Preencha todos os campos!!')
+    }else {
+        const data = {
+            "title": title,
+            "annotation": annotation
+        }
+        
+        fetch('http://localhost:3000/app/task', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(response => response.ok).then(() => {
+            location.reload(true)
+        }).catch(error => console.log(error))
+    }
+}
+
+
+function updateTask(){
+    const title = document.getElementById('title').value
+    const annotation = document.getElementById('annotation').value
+
+    if (title === '' || annotation === '' ){
+        alert('Preencha todos os campos!!')
+    }else {
+        const taskBody = {
+            "title": title,
+            "annotation": annotation
+        }
+
+        const task = getTask(url)
+        task.then( data => {
+            fetch(`http://localhost:3000/app/update/${data.id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(taskBody)
+        }).then(response => response.ok).then(() => {
+            location.reload(true)
+        }).catch(error => console.log(error))
+        })    
+    }
+}
+    </script>
+</body>
+</html>
+
